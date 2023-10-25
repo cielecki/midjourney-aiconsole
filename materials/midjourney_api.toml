@@ -1,8 +1,10 @@
+name = "MidJourney API"
+version = "0.0.3"
 usage = "When you have a midjourney prompt and need to create an image from it and display images from local path"
 content_type = "api"
 content_api = """
 ""\"
-Always prefer this to other discord libraries and access methods.
+The following functions are the MidJourney API. Always prefer this to other discord libraries and access methods.
 ""\"
 
 
