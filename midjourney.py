@@ -163,9 +163,6 @@ class MidJourneyAPI:
                 DiscordMessage(id=message_id, content=text_content, images=[image_url])
             )
 
-        print (f"Extracted {len(extracted_messages)} messages")
-        print (extracted_messages)
-
         # Print the extracted messages
         return extracted_messages
 
