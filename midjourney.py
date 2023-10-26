@@ -49,7 +49,7 @@ def _get_image_url(message: WebElement) -> str:
 
     if not image_url:
         image_element = message.find_elements(
-            By.CSS_SELECTOR, "a[class*='originalLink-']"
+            By.CSS_SELECTOR, "a[class*='originalLink_']"
         )
         if image_element:
             image_url = image_element[0].get_attribute("href")
@@ -126,7 +126,7 @@ class MidJourneyAPI:
 
         # Locate all messages
         messages = self.driver.find_elements(
-            By.CSS_SELECTOR, 'li[class*="messageListItem-"]'
+            By.CSS_SELECTOR, 'li[class*="messageListItem_"]'
         )
 
         extracted_messages = []
@@ -149,7 +149,7 @@ class MidJourneyAPI:
             # Extract text content
             text_content = ""
             content_div = message.find_element(
-                By.CSS_SELECTOR, "div.markup-eYLPri.messageContent-2t3eCI"
+                By.CSS_SELECTOR, 'div[class*="messageContent_"]'
             )
             if content_div:
                 text_content = content_div.text
@@ -162,6 +162,9 @@ class MidJourneyAPI:
             extracted_messages.append(
                 DiscordMessage(id=message_id, content=text_content, images=[image_url])
             )
+
+        print (f"Extracted {len(extracted_messages)} messages")
+        print (extracted_messages)
 
         # Print the extracted messages
         return extracted_messages
@@ -200,7 +203,7 @@ class MidJourneyAPI:
                     By.CSS_SELECTOR, 'input[name="email"]'
                 )
                 or driver.find_elements(
-                    By.CSS_SELECTOR, 'div[class*="channelTextArea-"]'
+                    By.CSS_SELECTOR, 'div[class*="channelTextArea_"]'
                 )
             )
         except TimeoutException:
@@ -209,7 +212,7 @@ class MidJourneyAPI:
 
         # if we have channelTextArea- element then we are already logged in on the right channel
         if self.driver.find_elements(
-            By.CSS_SELECTOR, 'div[class*="channelTextArea-"]'
+            By.CSS_SELECTOR, 'div[class*="channelTextArea_"]'
         ):
             print ("Already logged in")
             return
@@ -237,7 +240,7 @@ class MidJourneyAPI:
         # Wait for close button or message input box to appear
         WebDriverWait(self.driver, 10000).until(
             lambda driver: driver.find_elements(
-                    By.CSS_SELECTOR, 'div[class*="channelTextArea-"]'
+                    By.CSS_SELECTOR, 'div[class*="channelTextArea_"]'
                 )
                 or driver.find_elements(
                     By.XPATH, "//button[contains(.,'Close')]"
@@ -285,7 +288,7 @@ class MidJourneyAPI:
         self.driver.switch_to.active_element.send_keys("/imagine")
         WebDriverWait(self.driver, 1000).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'div[class*="autocompleteRowHeading-"]')
+                (By.CSS_SELECTOR, 'div[class*="autocompleteRowHeading_"]')
             )
         )
 
